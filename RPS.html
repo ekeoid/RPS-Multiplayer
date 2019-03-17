@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Rock Paper Scissors Part 2
+  </title>
+</head>
+
+<body>
+
+  <div id="game">
+    <h3>Select Rock ['r'], Paper ['p]', or Scissors ['s]: </h3>
+  </div>
+
+  <div id="results">
+    <p><span id="userGuess"></span></p>
+    <p><span id="computerGuess"></span></p>
+    <p><span id="userWins"></span></p>
+    <p><span id="userLosses"></span></p>
+    <p><span id="userTies"></span></p>
+  </div>
+  <script type="text/javascript">
+
+    // Creates an array that lists out all of the options (Rock, Paper, or Scissors).
+    var computerChoices = ["r", "p", "s"];
+    var userWins = 0;
+    var userLosses = 0;
+    var userTies = 0;
+    var userText;
+
+    // This function is run whenever the user presses a key.
+    document.onkeyup = function (event) {
+
+      // Determines which key was pressed.
+      var userGuess = event.key;
+
+      // Randomly chooses a choice from the options array. This is the Computer's guess.
+      var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+      if (userGuess.toLowerCase() != "r" && userGuess.toLowerCase() != "p" && userGuess.toLowerCase() != "s") {
+        alert("Wrong Key");
+        computerGuess = "";
+      } 
+        
+      
+
+      /*
+      if (userGuess.toLowerCase() == "r" || userGuess.toLowerCase() == "p" || userGuess.toLowerCase() == "s") {
+        var userText = document.getElementById("game");
+        userText.textContent = "Hello";
+      } else {
+        alert ("You did not type 'r', 'p', or 's'!!!");
+      }
+      
+      var userText = document.getElementById("game");
+      userText.textContent = "Hello";
+      */
+      //
+
+
+      // Rocks
+      if (userGuess == "r") {
+        if (computerGuess == "r") {
+          userTies++;
+        }
+        if (computerGuess == "p") {
+          userLosses++;
+        }
+        if (computerGuess == "s") {
+          userWins++;
+        }
+      }
+
+      if (userGuess == "p") {
+        if (computerGuess == "r") {
+          userWins++;
+        }
+        if (computerGuess == "p") {
+          userTies++;
+        }
+        if (computerGuess == "s") {
+          userLosses++;
+        }
+      }
+
+      if (userGuess == "s") {
+        if (computerGuess == "r") {
+          userLosses++;
+        }
+        if (computerGuess == "p") {
+          userWins++;
+        }
+        if (computerGuess == "s") {
+          userTies++;
+        }
+      }
+
+      if (userWins != 0 || userLosses != 0 || userTies != 0) {
+        userText = document.getElementById("game");
+        userText.textContent = "";
+      }
+
+      /*
+      R P S
+      0 1 2
+
+      
+      */
+
+
+      userText = document.getElementById("userGuess");
+      userText.textContent = "You choose: " + userGuess;
+
+      userText = document.getElementById("computerGuess");
+      userText.textContent = "The computer chose: " + computerGuess;
+
+      userText = document.getElementById("userWins");
+      userText.textContent = "wins: " + userWins;
+
+      userText = document.getElementById("userLosses");
+      userText.textContent = "losses: " + userLosses;
+
+      userText = document.getElementById("userTies");
+      userText.textContent = "ties: " + userTies;
+      // Alerts the key the user pressed (userGuess).
+      //alert("User guess: " + userGuess);
+
+      // Alerts the Computer's guess.
+      //alert("Computer guess: " + computerGuess);
+
+
+
+      // Error Handling
+
+    };
+
+
+  </script>
+
+</body>
+
+</html>
