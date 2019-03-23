@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <title>RPS-Multiplayer</title>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> <!-- jQuery -->
-    <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script> <!-- Firebase -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-database.js"></script>
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
@@ -15,15 +17,65 @@
         <h1>Rock Paper Scissors</h1>
     </div>
 
-    <div id="main">
-        <div id="status-area"></div>
-        <div id="game-area"></div>
+    <div id="container">
+        <!-- <img src=""> -->
+        <div id="main">
+            <div id="status-area">
+                <div class="col">x</div>
+            </div>
+
+            <div id="game-area">
+                <div id="player1-area">
+                    <div class="img-rock"></div>
+                    <div class="img-paper"></div>
+                    <div class="img-scissors"></div>
+                </div>
+                <div id="player2-area">
+                    <span class="span-rock">
+                        <div class="img-rock"></div>
+                        <p>Rock</p>
+                    </span>
+                    <span class="span-paper">
+                        <div class="img-paper"></div>
+                        <p>Paper</p>
+                    </span>
+                    <span class="span-scissors">
+                        <div class="img-scissors"></div>
+                        <p>Scissors</p>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="click-button">Click Me!!!!</button>
+
+    <div class="formPanel">
+        <form id="name-form">
+            <input type="text" id="name-input" placeholder="Your Name">
+            <input id="add-name" type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div id="player1name">
+        Player 1
+    </div>
+
+    <div id="player2name">
+        Player 2
+    </div>
+    </div>
+
+
     </div>
 
     <div id="footer">
-        <h5>Homework #7 : RPS-Multiplayer</h5>
+        <div id="footer-text">
+            <h5>Homework #7 : RPS-Multiplayer</h5>
+            <p>Connected Peers: <strong><span id="connected-viewers"></span></strong></p>
+        </div>
     </div>
-    <!-- <script src="assets/javascript/game.js"></script> -->
+    <script src="assets/javascript/game.js"></script>
 </body>
 
 </html>
