@@ -15,22 +15,33 @@
 <body>
     <div id="header">
         <h1>Rock Paper Scissors</h1>
-    </div>
+    </div> <!-- #header -->
 
     <div id="container">
-        <!-- <img src=""> -->
         <div id="main">
             <div id="status-area">
-                <div class="col">x</div>
-            </div>
+                <div id="status-form">
+                    <p>Enter your name below to begin:</p>
+                    <form id="name-form">
+                        <input type="text" id="input-name" placeholder="Your Name">
+                        <input id="input-submit" type="submit" value="Submit">
+                    </form>
+                </div>
+                <div id="status-text">
+                    Player 1: Status </br>
+                    Wins: </br>
+                    Losses: </br>
+                    Ties: </br>
+
+                    Player 2: Status </br>
+                </div>
+            </div> <!-- #status-area -->
 
             <div id="game-area">
                 <div id="player1-area">
-                    <div class="img-rock"></div>
-                    <div class="img-paper"></div>
-                    <div class="img-scissors"></div>
-                </div>
-                <div id="player2-area">
+                    <div id="player1-name">
+                        Player 1
+                    </div>
                     <span class="span-rock">
                         <div class="img-rock"></div>
                         <p>Rock</p>
@@ -44,37 +55,37 @@
                         <p>Scissors</p>
                     </span>
                 </div>
-            </div>
-        </div>
-    </div>
+                <div id="player2-area">
+                    <div id="player2-name">
+                        Player 2
+                    </div>
+                    <span class="span-rock">
+                        <div class="img-rock"></div>
+                        <p>Rock</p>
+                    </span>
+                    <span class="span-paper">
+                        <div class="img-paper"></div>
+                        <p>Paper</p>
+                    </span>
+                    <span class="span-scissors">
+                        <div class="img-scissors"></div>
+                        <p>Scissors</p>
+                    </span>
+                </div>
+            </div> <!-- #game-area -->
+        </div> <!-- #main -->
 
-    <button id="click-button">Click Me!!!!</button>
+        <div id="chat">
+        </div> <!-- #chat -->
 
-    <div class="formPanel">
-        <form id="name-form">
-            <input type="text" id="name-input" placeholder="Your Name">
-            <input id="add-name" type="submit" value="Submit">
-        </form>
-    </div>
-
-    <div id="player1name">
-        Player 1
-    </div>
-
-    <div id="player2name">
-        Player 2
-    </div>
-    </div>
-
-
-    </div>
+    </div> <!-- #container -->
 
     <div id="footer">
         <div id="footer-text">
             <h5>Homework #7 : RPS-Multiplayer</h5>
             <p>Connected Peers: <strong><span id="connected-viewers"></span></strong></p>
         </div>
-    </div>
+    </div> <!-- #footer -->
     <script src="assets/javascript/game.js"></script>
 </body>
 
