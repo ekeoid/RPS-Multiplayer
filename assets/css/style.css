@@ -67,21 +67,34 @@ div#player1-area, div#player2-area {
     display: inline-block;
     width: 42%;
     height: 300px;
+    position: relative;
 }
 
 div#player1-area {
     margin-right: 20px;
     /* border: 1px dotted #999; */
 }
+
 div#player1-name, div#player2-name {
     padding-top: 10px;
     padding-bottom: 30px;
     font-size: 18pt;
     color: #DDD;
 }
+
 div#player2-area {
     margin-left: 20px;
     /* border: 1px dotted #999; */
+}
+
+div#player1-message, div#player2-message {
+    /* border: 1px dotted limegreen; */
+    padding: 10px;
+    height: 45px;
+    width: 83%;
+    position: absolute;
+    bottom: 0;
+    color: #BBB;
 }
 
 div#footer {
