@@ -59,20 +59,21 @@ div#game-area {
     padding: 20px;
     display: inline-block;
     width: 70%;
-    /* border: 1px dotted #999; */
+    border: 1px dotted #999;
 }
 
 div#player1-area, div#player2-area {
     padding: 0 15px;
-    display: inline-block;
+    /* display: inline-block; */
     width: 42%;
     height: 300px;
-    position: relative;
+    /* position: relative; */
+    float: left;
 }
 
 div#player1-area {
     margin-right: 20px;
-    /* border: 1px dotted #999; */
+    border: 1px dotted #999;
 }
 
 div#player1-name, div#player2-name {
@@ -84,15 +85,15 @@ div#player1-name, div#player2-name {
 
 div#player2-area {
     margin-left: 20px;
-    /* border: 1px dotted #999; */
+    border: 1px dotted #999;
 }
 
 div#player1-message, div#player2-message {
-    /* border: 1px dotted limegreen; */
+    border: 1px dotted limegreen;
     padding: 10px;
     height: 45px;
     width: 83%;
-    position: absolute;
+    /* position: relative; */
     bottom: 0;
     color: #BBB;
 }

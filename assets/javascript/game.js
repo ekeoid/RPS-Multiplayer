@@ -20,23 +20,8 @@ var player = 0;
 var player1Ref = database.ref("players/player1");
 var player2Ref = database.ref("players/player2");
 
-function checkGame(snapshot) {
-    console.log("Player 1 Choice: " + snapshot.val().players.player1.choice);
+function checkGame(player1, player2) {
     var isGameOver = false;
-
-    var player1 = {
-        choice: snapshot.val().players.player1.choice,
-        wins: parseInt(snapshot.val().players.player1.wins),
-        losses: parseInt(snapshot.val().players.player1.losses),
-        ties: parseInt(snapshot.val().players.player1.ties)
-    }
-
-    var player2 = {
-        choice: snapshot.val().players.player2.choice,
-        wins: parseInt(snapshot.val().players.player2.wins),
-        losses: parseInt(snapshot.val().players.player2.losses),
-        ties: parseInt(snapshot.val().players.player2.ties)
-    }
 
     // Tie game
     if (player1.choice === player2.choice && player1.choice != null && player2.choice != null) {
@@ -90,10 +75,22 @@ database.ref().on("value", function (snapshot) {
 
     var player1;
     var player2;
-    
+
     // Needed to update Player 2 session if other players connects. 
     if (snapshot.child("players/player1").exists()) {
         isPlayer1Connected = true;
+
+        if (player == 1) {
+            $("#2rock").hide();
+            $("#2paper").hide();
+            $("#2scissors").hide();
+        }
+
+        if (player == 2) {
+            $("#1rock").hide();
+            $("#1paper").hide();
+            $("#1scissors").hide();
+        }
 
         player1 = {
             name: snapshot.val().players.player1.name,
@@ -135,33 +132,47 @@ database.ref().on("value", function (snapshot) {
         $(".player2-status").text(isPlayer2Connected ? "Connected" : "Waiting");
     }
 
-    if (snapshot.child("players/player1/choice").exists()) {        
-        
+    if (snapshot.child("players/player1/choice").exists()) {
+
         switch (player1.choice) {
             case "rock":
-            case "paper":    
+            case "paper":
             case "scissors":
-                $("#player1-message").text(player1.name + " chose " + player1.choice);
+                if (player == 1) {
+                    $("#player1-message").text("You chose " + player1.choice);
+                }
+
+                if (player == 2) {
+                    $("#player1-message").text(player1.name + " has chosen");
+                }
+
                 if (player2.choice == null || player2.choice == undefined) {
                     $("#player2-message").text("Waiting for " + player2.name + " to choose");
                 } else {
-                    checkGame(snapshot);
+                    checkGame(player1, player2);
                 }
                 break;
         }
-    } 
+    }
 
     if (snapshot.child("players/player2/choice").exists()) {
 
         switch (player2.choice) {
             case "rock":
-            case "paper":    
+            case "paper":
             case "scissors":
-                $("#player2-message").text(player2.name + " chose " + player2.choice);
+                if (player == 1) {
+                    $("#player2-message").text(player1.name + " has chosen");
+                }
+
+                if (player == 2) {
+                    $("#player2-message").text("You chose " + player2.choice);
+                }
+                
                 if (player2.choice === null || player2.choice == undefined) {
                     $("#player1-message").text("Waiting for " + player1.name + " to choose");
                 } else {
-                    checkGame(snapshot);
+                    checkGame(player1, player2);
                 }
                 break;
         }
@@ -322,4 +333,8 @@ connectionsRef.on("value", function (snapshot) {
     // Display the viewer count in the html.
     // The number of online users is the number of children in the connections list.
     $("#connected-viewers").text(snapshot.numChildren());
+});
+
+$(document).ready(function () {
+
 });
