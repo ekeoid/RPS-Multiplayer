@@ -15,13 +15,13 @@ var database = firebase.database();
 // Global variables
 var isPlayer1Connected = false;
 var isPlayer2Connected = false;
+var isGameOver = false;
 var player = 0;
 
 var player1Ref = database.ref("players/player1");
 var player2Ref = database.ref("players/player2");
 
 function checkGame(player1, player2) {
-    var isGameOver = false;
 
     // Tie game
     if (player1.choice === player2.choice && player1.choice != null && player2.choice != null) {
@@ -54,6 +54,13 @@ function checkGame(player1, player2) {
     }
 
     if (isGameOver) {
+
+        console.log ("#1" + player1.choice);
+        console.log ("#2" + player2.choice);
+
+        $("#1" + player1.choice).show();
+        $("#2" + player2.choice).show();
+
         database.ref("/players/player1").update({
             "wins": player1.wins,
             "losses": player1.losses,
@@ -67,7 +74,6 @@ function checkGame(player1, player2) {
             "ties": player2.ties,
             "choice": null
         });
-
     }
 }
 
@@ -80,13 +86,13 @@ database.ref().on("value", function (snapshot) {
     if (snapshot.child("players/player1").exists()) {
         isPlayer1Connected = true;
 
-        if (player == 1) {
+        if (player == 1 && !isGameOver) {
             $("#2rock").hide();
             $("#2paper").hide();
             $("#2scissors").hide();
         }
 
-        if (player == 2) {
+        if (player == 2 && !isGameOver) {
             $("#1rock").hide();
             $("#1paper").hide();
             $("#1scissors").hide();
@@ -168,7 +174,7 @@ database.ref().on("value", function (snapshot) {
                 if (player == 2) {
                     $("#player2-message").text("You chose " + player2.choice);
                 }
-                
+
                 if (player2.choice === null || player2.choice == undefined) {
                     $("#player1-message").text("Waiting for " + player1.name + " to choose");
                 } else {
@@ -186,7 +192,7 @@ database.ref().on("value", function (snapshot) {
 // Hide other players choice to show result
 database.ref("players/").on("value", function (snapshot) {
     if (snapshot.child("player1/choice").exists()) {
-        console.log("P1 choice: " + snapshot.val().player1.choice);
+
         switch (snapshot.val().player1.choice) {
             case ("rock"):
                 $("#1paper").hide();
@@ -204,7 +210,7 @@ database.ref("players/").on("value", function (snapshot) {
     }
 
     if (snapshot.child("player2/choice").exists()) {
-        console.log("P2 choice: " + snapshot.val().player2.choice);
+    
         switch (snapshot.val().player2.choice) {
             case ("rock"):
                 $("#2paper").hide();
