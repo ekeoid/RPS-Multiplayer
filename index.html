@@ -24,16 +24,21 @@
                     <p>Enter your name below to begin:</p>
                     <form id="name-form">
                         <input type="text" id="input-name" placeholder="Your Name">
-                        <input id="input-submit" type="submit" value="Submit">
+                        <input id="input-submit" type="submit" value="Start">
                     </form>
                 </div>
                 <div id="status-text">
-                    Player 1: Status </br>
-                    Wins: </br>
-                    Losses: </br>
-                    Ties: </br>
+                    <h3>Player 1: <span class="player1-status">Status</span></h3>
+                    <p>Wins: <span class="player1-wins">0</span></p>
+                    <p>Losses: <span class="player1-losses">0</span></p>
+                    <p>Ties: <span class="player1-ties">0</span></p>
 
-                    Player 2: Status </br>
+                    <h3>Player 2: <span class="player2-status">Status</span></h3>
+                    <p>Wins: <span class="player2-wins">0</span></p>
+                    <p>Losses: <span class="player2-losses">0</span></p>
+                    <p>Ties: <span class="player2-ties">0</span></p>
+
+                    <h4><span class="game-message">Game Message</span></h4>
                 </div>
             </div> <!-- #status-area -->
 
@@ -42,15 +47,15 @@
                     <div id="player1-name">
                         Player 1
                     </div>
-                    <span class="span-rock">
+                    <span class="choice span-rock" id="1rock">
                         <div class="img-rock"></div>
                         <p>Rock</p>
                     </span>
-                    <span class="span-paper">
+                    <span class="choice span-paper" id="1paper">
                         <div class="img-paper"></div>
                         <p>Paper</p>
                     </span>
-                    <span class="span-scissors">
+                    <span class="choice span-scissors" id="1scissors">
                         <div class="img-scissors"></div>
                         <p>Scissors</p>
                     </span>
@@ -59,15 +64,15 @@
                     <div id="player2-name">
                         Player 2
                     </div>
-                    <span class="span-rock">
+                    <span class="choice span-rock" id="2rock">
                         <div class="img-rock"></div>
                         <p>Rock</p>
                     </span>
-                    <span class="span-paper">
+                    <span class="choice span-paper" id="2paper">
                         <div class="img-paper"></div>
                         <p>Paper</p>
                     </span>
-                    <span class="span-scissors">
+                    <span class="choice span-scissors" id="2scissors">
                         <div class="img-scissors"></div>
                         <p>Scissors</p>
                     </span>
