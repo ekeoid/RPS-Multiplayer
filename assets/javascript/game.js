@@ -19,8 +19,6 @@ var player = 0;
 
 var player1Ref = database.ref("players/player1");
 var player2Ref = database.ref("players/player2");
-var stateRef = database.ref("state");
-
 
 function checkGame(snapshot) {
     console.log("Player 1 Choice: " + snapshot.val().players.player1.choice);
@@ -77,7 +75,7 @@ function checkGame(snapshot) {
             "ties": player1.ties,
             "choice": null
         });
-    
+
         database.ref("/players/player2").update({
             "wins": player2.wins,
             "losses": player2.losses,
@@ -85,10 +83,6 @@ function checkGame(snapshot) {
             "choice": null
         });
 
-        database.ref("/state/").update({
-            "turn1": 0,
-            "turn2": 0
-        });
     }
 }
 
@@ -136,46 +130,44 @@ database.ref().on("value", function (snapshot) {
         $(".player2-status").text(isPlayer2Connected ? "Connected" : "Waiting");
     }
 
-    if (snapshot.child("state/turn1").exists()) {
-        var state = snapshot.val().state.turn1;
-
-        switch (state) {
-            case 0:
-                console.log("P1 STATE: " + state);
-                break;
-            case 1:
-                if (snapshot.val().state.turn2 == 0) {
+    if (snapshot.child("players/player1/choice").exists()) {
+        var choice1 = snapshot.val().players.player1.choice;
+        var choice2 = snapshot.val().players.player2.choice;
+        
+        switch (choice1) {
+            case "rock":
+            case "paper":    
+            case "scissors":
+                if (choice2 == null || choice2 == undefined) {
                     console.log("Waiting for Player 2 to choose");
                 } else {
                     checkGame(snapshot);
                 }
                 break;
         }
-        
-    }
+    } 
 
-    if (snapshot.child("state/turn2").exists()) {
-        var state = snapshot.val().state.turn2;
+    if (snapshot.child("players/player2/choice").exists()) {
+        var choice1 = snapshot.val().players.player1.choice;
+        var choice2 = snapshot.val().players.player2.choice;
 
-        switch (state) {
-            case 0:
-                console.log("P2 STATE: " + state);
-                break;
-            case 1:
-                if (snapshot.val().state.turn1 == 0) {
+        switch (choice2) {
+            case "rock":
+            case "paper":    
+            case "scissors":
+                if (choice1 === null || choice1 == undefined) {
                     console.log("Waiting for Player 1 to choose");
                 } else {
-                    checkGame(snapshot); 
+                    checkGame(snapshot);
                 }
                 break;
         }
     }
 
-
-        // Create Error Handling
-    }, function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-    });
+    // Create Error Handling
+}, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+});
 
 // Hide other players choice to show result
 database.ref("players/").on("value", function (snapshot) {
@@ -248,10 +240,6 @@ $("#input-submit").on("click", function (event) {
                 "choice": null
             });
 
-            stateRef.set({
-                "turn1": 0
-            })
-
             player1Ref.onDisconnect().remove();
 
             $(".game-message").html("Hi " + name + "! You are Player 1");
@@ -270,17 +258,10 @@ $("#input-submit").on("click", function (event) {
                 "choice": null
             });
 
-            stateRef.set({
-                "turn2": 0
-            })
-
             player2Ref.onDisconnect().remove();
 
             $(".game-message").html("Hi " + name + "! You are Player 2");
-
         }
-
-        stateRef.onDisconnect().remove();
     }
 
 });
@@ -293,9 +274,6 @@ $(".choice").on("click", function (event) {
         database.ref("players/player" + player).update({
             "choice": choice.substring(1, choice.length),
         });
-
-        (player == 1) ? database.ref("state/").update({ "turn1": 1 }) : database.ref("state/").update({ "turn2": 1 });
-        (player == 1) ? console.log("Got to 1") : console.log("Got to 2");
     }
 
     switch (choice) {
