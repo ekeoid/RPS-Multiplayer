@@ -88,22 +88,26 @@ function checkGame(snapshot) {
 
 database.ref().on("value", function (snapshot) {
 
+    var player1;
+    var player2;
+    
     // Needed to update Player 2 session if other players connects. 
     if (snapshot.child("players/player1").exists()) {
         isPlayer1Connected = true;
 
-        var player = {
+        player1 = {
             name: snapshot.val().players.player1.name,
             wins: snapshot.val().players.player1.wins,
             losses: snapshot.val().players.player1.losses,
-            ties: snapshot.val().players.player1.ties
+            ties: snapshot.val().players.player1.ties,
+            choice: snapshot.val().players.player1.choice
         }
 
-        $("#player1-name").text(player.name);
+        $("#player1-name").text(player1.name);
         $(".player1-status").text(isPlayer1Connected ? "Connected" : "Waiting");
-        $(".player1-wins").text(player.wins);
-        $(".player1-losses").text(player.losses);
-        $(".player1-ties").text(player.ties);
+        $(".player1-wins").text(player1.wins);
+        $(".player1-losses").text(player1.losses);
+        $(".player1-ties").text(player1.ties);
     } else {
         isPlayer1Connected = false;
         $(".player1-status").text(isPlayer1Connected ? "Connected" : "Waiting");
@@ -113,33 +117,33 @@ database.ref().on("value", function (snapshot) {
     if (snapshot.child("players/player2").exists()) {
         isPlayer2Connected = true;
 
-        var player = {
+        player2 = {
             name: snapshot.val().players.player2.name,
             wins: snapshot.val().players.player2.wins,
             losses: snapshot.val().players.player2.losses,
-            ties: snapshot.val().players.player2.ties
+            ties: snapshot.val().players.player2.ties,
+            choice: snapshot.val().players.player2.choice
         }
 
-        $("#player2-name").text(player.name);
+        $("#player2-name").text(player2.name);
         $(".player2-status").text(isPlayer2Connected ? "Connected" : "Waiting");
-        $(".player2-wins").text(player.wins);
+        $(".player2-wins").text(player2.wins);
         $(".player2-losses").text(player.losses);
-        $(".player2-ties").text(player.ties);
+        $(".player2-ties").text(player2.ties);
     } else {
         isPlayer2Connected = false;
         $(".player2-status").text(isPlayer2Connected ? "Connected" : "Waiting");
     }
 
-    if (snapshot.child("players/player1/choice").exists()) {
-        var choice1 = snapshot.val().players.player1.choice;
-        var choice2 = snapshot.val().players.player2.choice;
+    if (snapshot.child("players/player1/choice").exists()) {        
         
-        switch (choice1) {
+        switch (player1.choice) {
             case "rock":
             case "paper":    
             case "scissors":
-                if (choice2 == null || choice2 == undefined) {
-                    console.log("Waiting for Player 2 to choose");
+                $("#player1-message").text(player1.name + " chose " + player1.choice);
+                if (player2.choice == null || player2.choice == undefined) {
+                    $("#player2-message").text("Waiting for " + player2.name + " to choose");
                 } else {
                     checkGame(snapshot);
                 }
@@ -148,15 +152,14 @@ database.ref().on("value", function (snapshot) {
     } 
 
     if (snapshot.child("players/player2/choice").exists()) {
-        var choice1 = snapshot.val().players.player1.choice;
-        var choice2 = snapshot.val().players.player2.choice;
 
-        switch (choice2) {
+        switch (player2.choice) {
             case "rock":
             case "paper":    
             case "scissors":
-                if (choice1 === null || choice1 == undefined) {
-                    console.log("Waiting for Player 1 to choose");
+                $("#player2-message").text(player2.name + " chose " + player2.choice);
+                if (player2.choice === null || player2.choice == undefined) {
+                    $("#player1-message").text("Waiting for " + player1.name + " to choose");
                 } else {
                     checkGame(snapshot);
                 }
