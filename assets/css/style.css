@@ -89,13 +89,21 @@ div#player2-area {
 }
 
 div#player1-message, div#player2-message {
-    border: 1px dotted limegreen;
+    /* border: 1px dotted limegreen; */
     padding: 10px;
     height: 45px;
     width: 83%;
     /* position: relative; */
     bottom: 0;
     color: #BBB;
+}
+
+div#restart-area {
+    float: left; 
+    position: relative;
+    margin-top: 20px;
+    /* height: 100px;  */
+    /* border: 1px dotted red;  */
 }
 
 div#footer {
@@ -113,6 +121,21 @@ div#footer-text {
     background-color: #333;
     border-top: 8px solid #222;
     color: #999;
+}
+
+#input-play, #input-quit {
+    background-color: #DDD;
+    border: none;
+    color: #222;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12pt;
+}
+
+#input-quit {
+    margin-left: 15px;
 }
 
 #footer h5 {

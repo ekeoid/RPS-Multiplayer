@@ -17,9 +17,20 @@ var isPlayer1Connected = false;
 var isPlayer2Connected = false;
 var isGameOver = false;
 var player = 0;
+var turn = 0;
 
 var player1Ref = database.ref("players/player1");
 var player2Ref = database.ref("players/player2");
+
+function restartGame() {
+    $("#restart-area").show();
+    //play again or quit
+
+    // if quit
+    // disconnect player
+    // reset total game score.
+    //
+}
 
 function checkGame(player1, player2) {
 
@@ -32,12 +43,16 @@ function checkGame(player1, player2) {
     }
 
     // Player 1 Wins
+
     if ((player1.choice == "rock" && player2.choice == "scissors") ||
         (player1.choice == "paper" && player2.choice == "rock") ||
         (player1.choice == "scissors" && player2.choice == "paper")) {
+        
+            if (!isGameOver) {
+                player1.wins++;
+                player2.losses++;
+            }
 
-        player1.wins++;
-        player2.losses++;
         $(".game-message").text("Player 1 Wins!");
         isGameOver = true;
     }
@@ -47,8 +62,11 @@ function checkGame(player1, player2) {
         (player1.choice == "paper" && player2.choice == "scissors") ||
         (player1.choice == "scissors" && player2.choice == "rock")) {
 
-        player1.losses++;
-        player2.wins++;
+            if (!isGameOver) {
+                player1.losses++;
+                player2.wins++;
+            }
+        
         $(".game-message").text("Player 2 Wins!");
         isGameOver = true;
     }
@@ -74,6 +92,9 @@ function checkGame(player1, player2) {
             "ties": player2.ties,
             "choice": null
         });
+
+        // Restart Game
+        restartGame();
     }
 }
 
@@ -159,6 +180,12 @@ database.ref().on("value", function (snapshot) {
                 }
                 break;
         }
+    } else {
+        if (!isGameOver && isPlayer1Connected && player1.choice == null && player == 1) {
+            $("#1rock").show();
+            $("#1paper").show();
+            $("#1scissors").show();
+        }
     }
 
     if (snapshot.child("players/player2/choice").exists()) {
@@ -181,6 +208,12 @@ database.ref().on("value", function (snapshot) {
                     checkGame(player1, player2);
                 }
                 break;
+        }
+    } else {
+        if (!isGameOver && isPlayer2Connected && player2.choice == null && player == 2) {
+            $("#2rock").show();
+            $("#2paper").show();
+            $("#2scissors").show();
         }
     }
 
@@ -315,6 +348,43 @@ $(".choice").on("click", function (event) {
     }
 });
 
+$("#input-play").on("click", function (event) {
+    event.preventDefault();
+    turn++;
+
+    $("#" + player + "rock").hide();
+    $("#" + player + "paper").hide();
+    $("#" + player + "scissors").hide();
+
+    if (player == 1) {
+        isGameOver = false;
+        database.ref("/players").update({
+            "turn": turn
+        });      
+    }
+
+    if (player == 2) {
+        isGameOver = false;
+        database.ref("/players").update({
+            "turn": turn
+        });
+    }
+});
+
+$("#input-quit").on("click", function (event) {
+    event.preventDefault();
+    if (player == 1) {
+        isGameOver = true;
+        player1Ref.remove();
+        $("#status-form").show();
+    }
+
+    if (player == 2) {
+        isGameOver = true;
+        player2Ref.remove();
+        $("#status-form").show();
+    }
+});
 
 // All of our connections will be stored in this directory.
 // connectionsRef references a specific location in our database.
